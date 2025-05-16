@@ -20,6 +20,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -61,6 +62,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun FirstScreen(modifier: Modifier = Modifier) {
+    val websocketViewModel: WebsocketViewModel = viewModel()
+
     var sendText by remember {
         mutableStateOf("")
     }
