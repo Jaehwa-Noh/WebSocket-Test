@@ -104,7 +104,7 @@ fun FirstScreen(modifier: Modifier = Modifier) {
         Button(onClick = {
             clientWebSocket = HttpClient(CIO) {
                 install(WebSockets) {
-                    pingIntervalMillis = 20_0000
+                    pingIntervalMillis = 20_000
                     KotlinxWebsocketSerializationConverter(Json)
                 }
 
