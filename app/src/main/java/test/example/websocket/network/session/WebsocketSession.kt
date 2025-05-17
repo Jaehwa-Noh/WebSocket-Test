@@ -49,6 +49,7 @@ class WebsocketSession @Inject constructor(
                 session?.incoming?.consumeAsFlow()?.filterIsInstance<Frame.Text>()
                     ?.mapNotNull { it.readText() }
                     ?.onEach {
+                        Log.i("jaewha", "receiveData $it")
                         event.tryEmit(it)
                     }
                     ?.collect()
@@ -82,6 +83,7 @@ class WebsocketSession @Inject constructor(
                 session?.incoming?.consumeAsFlow()?.filterIsInstance<Frame.Text>()
                     ?.mapNotNull { it.readText() }
                     ?.onEach {
+                        Log.i("jaewha", "receiveData $it")
                         event.tryEmit(it)
                     }
                     ?.collect()
