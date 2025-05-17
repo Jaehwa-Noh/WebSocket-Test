@@ -10,15 +10,16 @@ import javax.inject.Singleton
 interface WebsocketRepository {
     suspend fun sendText(text: String)
     fun getTextFlow(): Flow<String>
+    suspend fun regenerateSession()
     suspend fun close()
 }
 
 @Singleton
 class WebsocketRemoteRepository @Inject constructor(
     val websocketDataSource: WebsocketDataSource,
-    @DispatcherIO private val ioDispatcher: CoroutineDispatcher,
 ) : WebsocketRepository {
-    override suspend fun sendText(text: String) =  websocketDataSource.sendText(text)
+    override suspend fun sendText(text: String) = websocketDataSource.sendText(text)
+    override suspend fun regenerateSession() = websocketDataSource.regenerateSession()
 
     override fun getTextFlow(): Flow<String> = websocketDataSource.getTextFlow()
 
