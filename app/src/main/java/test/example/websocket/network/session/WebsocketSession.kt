@@ -58,8 +58,12 @@ class WebsocketSession @Inject constructor(
 
 
     suspend fun sendText(text: String) = withContext(ioDispatcher) {
-        val result = event.tryEmit(text)
-        Log.i("jaehwa", "send Data text $result")
+        if (session?.isActive == true) {
+            session?.outgoing?.send(
+                Frame.Text(text)
+            )
+        }
+        Log.i("jaehwa", "send Data text $text")
     }
 
     fun generateSession() {
