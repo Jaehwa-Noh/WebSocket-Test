@@ -88,7 +88,7 @@ class WebsocketSession @Inject constructor(
     suspend fun close(reasonText: String = "") {
         withContext(ioDispatcher) {
             session?.close(CloseReason(CloseReason.Codes.NORMAL, reasonText))
-            Log.i("vous", "session end: ${session?.isActive}")
+            Log.i("jaehwa", "session end: ${session?.isActive}")
             session = null
         }
     }
