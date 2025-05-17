@@ -49,6 +49,7 @@ class WebsocketSession @Inject constructor(
                 session?.incoming?.consumeAsFlow()?.filterIsInstance<Frame.Text>()
                     ?.mapNotNull { it.readText() }
                     ?.onEach {
+                        Log.i("jaewha", "receiveData $it")
                         event.tryEmit(it)
                     }
                     ?.collect()
@@ -58,8 +59,12 @@ class WebsocketSession @Inject constructor(
 
 
     suspend fun sendText(text: String) = withContext(ioDispatcher) {
-        val result = event.tryEmit(text)
-        Log.i("jaehwa", "send Data text $result")
+        if (session?.isActive == true) {
+            session?.outgoing?.send(
+                Frame.Text(text)
+            )
+        }
+        Log.i("jaehwa", "send Data text $text")
     }
 
     fun generateSession() {
@@ -78,6 +83,7 @@ class WebsocketSession @Inject constructor(
                 session?.incoming?.consumeAsFlow()?.filterIsInstance<Frame.Text>()
                     ?.mapNotNull { it.readText() }
                     ?.onEach {
+                        Log.i("jaewha", "receiveData $it")
                         event.tryEmit(it)
                     }
                     ?.collect()
@@ -88,7 +94,7 @@ class WebsocketSession @Inject constructor(
     suspend fun close(reasonText: String = "") {
         withContext(ioDispatcher) {
             session?.close(CloseReason(CloseReason.Codes.NORMAL, reasonText))
-            Log.i("vous", "session end: ${session?.isActive}")
+            Log.i("jaehwa", "session end: ${session?.isActive}")
             session = null
         }
     }
